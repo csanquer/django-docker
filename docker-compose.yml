@@ -1,0 +1,38 @@
+---
+version: '2'
+services:
+    postgresql:
+        image: postgres:9.5
+        container_name: postgresql
+        environment:
+            POSTGRES_DB:  sketchfab
+            POSTGRES_USER: pguser
+            POSTGRES_PASSWORD: pgpass
+        ports:
+            - "5432:5432"
+        volumes:
+            - "./volumes/postgres:/var/lib/postgresql/data"
+
+    phppgadmin:
+        container_name: phppgadmin
+        image: einfallstoll/phppgadmin:latest
+        environment:
+            POSTGRES_HOST: postgresql
+            POSTGRES_PORT: 5432
+            POSTGRES_DEFAULTDB: sketchfab
+        ports:
+            - "8080:80"
+        depends_on:
+            - postgresql
+
+    webapp:
+        build: django
+        container_name: webapp
+        working_dir: /srv/apps/app
+        command: python manage.py runserver 0.0.0.0:8000
+        ports:
+            - "8000:8000"
+        volumes:
+            - "./volumes/apps:/srv/apps"
+        depends_on:
+            - postgresql
