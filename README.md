@@ -40,4 +40,7 @@ make up
 
 The django application is listening on http://localhost:8000/.
 
-The phppgadmin on http://localhost:8080/phppgadmin/ (default Database user = pguser , passwor = pgpass)
+The phppgadmin on http://localhost:8080/phppgadmin/ :
+default Database user (in docker-composer.yml config):
+* username = pguser
+* password = pgpass
