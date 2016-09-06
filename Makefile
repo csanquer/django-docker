@@ -20,6 +20,10 @@ install: volumes
 install: rm
 install: build
 
+perms:
+	sudo setfacl -R -m u:`whoami`:rwX -m u:`whoami`:rwX volumes/apps
+	sudo setfacl -dR -m u:`whoami`:rwX -m u:`whoami`:rwX volumes/apps
+
 volumes:
 	mkdir -p volumes/apps
 
